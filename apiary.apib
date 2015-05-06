@@ -1,0 +1,33 @@
+FORMAT: 1A
+HOST: http://logbook.mysociety.org/
+
+# Logbook
+
+Logbook is a simple service for recording research events.
+
+# Hewlett Quant2 Event Gathering [/quant2{?callback,site,page,bucket,method,data,timer}]
+
+Endpoint to collect events for Hewlett Quant 2.
+
+## Record a new event [GET]
+
++ Parameters
+    + callback (optional, string) - Name of the callback function in a JSONP request.
+    + site (string) - Name of the site recording the event.
+    + page (string) - URL of the page the event was created on.
+    + bucket (integer) - Identifier of the treatment bucket the user was sorted into.
+    + method (enum[string]) - Type of event which has been triggered.
+        + Members
+            + `view` - A page view.
+            + `show_popup` - A popup was presented to the user.
+            + `suppressed_popup` - A popup would have been shown to the user, but it has been suppressed (for example by the flag for it already being shown being set).
+            + `click_popup_link` - A link in the popup has been clicked.
+            + `click_nav_link` - A link in the regular navigation has been clicked.
+    + data (optional, string) - Supplemental data, such as the method of triggering.
+    + timer (optional, integer) - Time spent on the page before the event was triggered.
+
++ Response 200 (application/javascript)
+
+        {
+            "success": true
+        }
