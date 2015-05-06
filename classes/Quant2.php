@@ -8,7 +8,7 @@ class Quant2 {
 
     private function recordEvent($site, $page, $bucket, $event, $data = null, $timer = null) {
 
-        Capsule::table('quant2-log')->insert([
+        Capsule::table('quant2_log')->insert([
             'timestamp' => time(),
             'site' => $site,
             'page' => $page,
