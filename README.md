@@ -18,12 +18,12 @@ Check the [API documentation](http://docs.logbook.apiary.io/).
 
 ### Configuration
 
-Copy the `conf/.env-example` file to `conf/.env` and adjust parameters accordingly.
+Copy the `conf/conf.env-example` file to `conf/conf.env` and adjust parameters accordingly.
 
 ### Libraries
 
-Libraries are handled using [Composer](https://getcomposer.org/). Do a `composer install`.
+Libraries are handled using [Composer](https://getcomposer.org/). Do a `php composer.phar install`.
 
 ### Migrations
 
-Migrations are handled using [Phinx](https://phinx.org/). To run them, `vendor/bin/phinx migrate -c conf/phinx.php`.
+Migrations are handled using [Phinx](https://phinx.org/). To run them, `vendor/bin/phinx migrate -c conf/phinx.php` (after you've installed the Composer requirements).

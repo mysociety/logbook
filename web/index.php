@@ -1,10 +1,7 @@
 <?php
 
-// Include the Composer autoloader, everything else is loaded automatically.
-require '../vendor/autoload.php';
-
-// Load the configuration file
-Dotenv::load('../conf/');
+// Bootstrap
+require '../start/bootstrap.php';
 
 // Register BooBoo as the error handler, so we get pretty JSON errors.
 $booboo = new League\BooBoo\Runner();
@@ -26,20 +23,7 @@ if ($_ENV['ENVIRONMENT'] !== 'development') {
     });
 }
 
-// Initialise a database connection.
-$db = new Illuminate\Database\Capsule\Manager;
-
-$db->addConnection([
-    'driver'    => 'pgsql',
-    'host'      => $_ENV['DB_HOST'],
-    'database'  => $_ENV['DB_NAME'],
-    'username'  => $_ENV['DB_USER'],
-    'password'  => $_ENV['DB_PASS'],
-    'charset'   => 'utf8',
-    'collation' => 'utf8_unicode_ci'
-]);
-
-// Make the DB available using static methods.
+// Make the DB available using static methods. $db comes from the bootstrapper.
 $db->setAsGlobal();
 
 // Set up the DI container
@@ -52,12 +36,23 @@ $container->add('Symfony\Component\HttpFoundation\Request', $request);
 // The router handles getting the right thing done
 $router = new League\Route\RouteCollection($container);
 
-// Here's the routing table.
+/*
+ * Begin routing table.
+ *
+ * $router->{http_method}('{url_path}', '{class}::{method}');
+ */
 
+// Home page
 $router->get('/', 'MySociety\Logbook\Home::showHome');
+
+// Quant2 collector. This is GET (not POST) because it has to be able to do JSONP AJAX.
 $router->get('/quant2', 'MySociety\Logbook\Quant2::handleEvent');
 
-// The dispatcher actually sends us places, the request is retrieved
+/*
+ * End routing table.
+ */
+
+// The dispatcher actually calls the right bit of code
 $dispatcher = $router->getDispatcher();
 
 // Pluck the method and path from the request, pass to the dispatcher.

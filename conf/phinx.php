@@ -9,26 +9,12 @@
  * You shouldn't need to edit any of this.
  */
 
-// Include the Composer autoloader, everything else is loaded automatically.
-require 'vendor/autoload.php';
+// Bootstrap
+require 'start/bootstrap.php';
 
-// Load the configuration file
-Dotenv::load('conf/');
+// Assemble the config array for Phinx and send it back.
+// $db comes from the bootstrapper.
 
-// Initialise a database connection.
-$db = new Illuminate\Database\Capsule\Manager;
-
-$db->addConnection([
-    'driver'    => 'pgsql',
-    'host'      => $_ENV['DB_HOST'],
-    'database'  => $_ENV['DB_NAME'],
-    'username'  => $_ENV['DB_USER'],
-    'password'  => $_ENV['DB_PASS'],
-    'charset'   => 'utf8',
-    'collation' => 'utf8_unicode_ci'
-]);
-
-// Assemble the config array for Phinx and send it back
 return array(
     "paths" => array(
         "migrations" => "db/migrations"
