@@ -55,8 +55,22 @@ $router->get('/quant2', 'MySociety\Logbook\Quant2::handleEvent');
 // The dispatcher actually calls the right bit of code
 $dispatcher = $router->getDispatcher();
 
-// Pluck the method and path from the request, pass to the dispatcher.
-$response = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo());
+try {
+
+    // Pluck the method and path from the request, pass to the dispatcher.
+    $response = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo());
+
+} catch (League\Route\Http\Exception\NotFoundException $e) {
+    $response = new Symfony\Component\HttpFoundation\Response(
+            json_encode([
+                'success' => false,
+                'message' => 'Not found.'
+            ]),
+            404,
+            ['Content-Type' => 'application/json']
+        );
+        $response->send();
+}
 
 // Fire off the response!
 $response->send();
