@@ -69,7 +69,6 @@ try {
             404,
             ['Content-Type' => 'application/json']
         );
-        $response->send();
 }
 
 // Fire off the response!
