@@ -48,6 +48,9 @@ $router->get('/', 'MySociety\Logbook\Home::showHome');
 // Quant2 collector. This is GET (not POST) because it has to be able to do JSONP AJAX.
 $router->get('/quant2', 'MySociety\Logbook\Quant2::handleEvent');
 
+// Mzalendo FB Survey collector. This is GET (not POST) because it has to be able to do JSONP AJAX.
+$router->get('/mzalendo-fb', 'MySociety\Logbook\MzalendoFacebook::handleEvent');
+
 /*
  * End routing table.
  */
